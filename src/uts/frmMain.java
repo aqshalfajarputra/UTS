@@ -56,7 +56,7 @@ public class frmMain extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        qty = new javax.swing.JLabel();
+        ya = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         harga = new javax.swing.JTextField();
         id = new javax.swing.JTextField();
@@ -129,10 +129,10 @@ public class frmMain extends javax.swing.JFrame {
         jPanel3.add(jLabel6);
         jLabel6.setBounds(20, 120, 130, 30);
 
-        qty.setForeground(new java.awt.Color(255, 255, 255));
-        qty.setText("qty");
-        jPanel3.add(qty);
-        qty.setBounds(20, 240, 130, 30);
+        ya.setForeground(new java.awt.Color(255, 255, 255));
+        ya.setText("qty");
+        jPanel3.add(ya);
+        ya.setBounds(20, 240, 130, 30);
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("HargaBarang");
@@ -206,6 +206,7 @@ public class frmMain extends javax.swing.JFrame {
         jPanel4.setBounds(0, 0, 1210, 80);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 255));
         jPanel1.setLayout(null);
@@ -260,114 +261,14 @@ public class frmMain extends javax.swing.JFrame {
         jPanel1.add(refresh);
         refresh.setBounds(420, 30, 90, 30);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(350, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
-        );
+        jPanel5.add(jPanel1);
+        jPanel1.setBounds(350, 90, 850, 90);
 
         getContentPane().add(jPanel5);
         jPanel5.setBounds(0, 0, 1210, 510);
 
         setBounds(0, 0, 1227, 554);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        // TODO add your handling code here:
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateFormat = null;
-
-        nama.setText("");
-        id.setText("");
-        jumlah.setText("");
-        harga.setText("");
-        buttonGroup1.clearSelection();
-        
-    }//GEN-LAST:event_clearActionPerformed
-
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // TODO add your handling code here:        
-        if("".equals(id.getText()) || "".equals(nama.getText())  || "".equals(harga.getText())  || "".equals(qty.getText()) 
-                || "".equals(kasir.getText()) ){
-            JOptionPane.showMessageDialog(this,"Harap Lengkapi Data","Error",JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            int total_harga;
-            int sub_total;
-            int diskon = 12;
-            int ya;
-            int harga1;
-            
-            String jumlahnya = qty.getText();
-            ya = Integer.parseInt(jumlahnya);
-            
-            String hrg = harga.getText();
-            harga1 = Integer.parseInt(hrg);
-            
-            sub_total = ya * harga1;
-            
-            if (sub_total > 100000){
-                total_harga = sub_total - (sub_total * (diskon/100));
-            }
-            else
-            {
-                total_harga= sub_total;
-                diskon = 0;
-            }
-            
-        java.util.Date skrg = new java.util.Date();
-        java.text.SimpleDateFormat kal = new 
-        java.text.SimpleDateFormat("dd/MM/yyyy");
-        String date = kal.format(skrg);
-        
-        String SQL = "INSERT INTO tb_transaksi(id_barang,nama_barang,harga_barang,qty,diskon,total,kasir,tanggal) "+
-                "VALUES('"+id.getText()+"','"+nama.getText()+"','"+harga.getText()+"','"+jumlahnya+"','"+diskon+"','"+total_harga+"','"+kasir.getText()+"','"+date+"')";                      
-        int Status = KoneksiDB.execute(SQL);
-        if (Status==1) {        
-            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Data gagal ditambahkan","Sukses",JOptionPane.WARNING_MESSAGE);
-        }
-        }
-    }//GEN-LAST:event_saveActionPerformed
-
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
-        int baris = tabel.getSelectedRow();
-        
-        if( baris >= 0 ){
-            String NIS = tabel.getValueAt(baris,0).toString();
-            String SQL = "DELETE FROM t_siswa WHERE NIS='"+NIS+"'";
-            int Status = KoneksiDB.execute(SQL);
-        if (Status==1) {
-            JOptionPane.showMessageDialog(this, "Data berhasil dihapus","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Data gagal dihapus","Gagal",JOptionPane.WARNING_MESSAGE);
-        }
-            
-        }
-        else {
-            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dulu","Error",JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_deleteActionPerformed
-
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-        // TODO add your handling code here:
-        selectData();
-    }//GEN-LAST:event_refreshActionPerformed
  
     public void settgl(){
         java.util.Date skrg = new java.util.Date();
@@ -410,30 +311,99 @@ ActionListener taskPerformer = new ActionListener(){
             id.setText(tabel.getValueAt(baris, 0).toString());
             nama.setText(tabel.getValueAt(baris, 1).toString());
             harga.setText(tabel.getValueAt(baris, 2).toString());
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-            Date dateFormat = null;
-             try {
-                dateFormat = date.parse(tabel.getValueAt(baris, 3).toString());
-            } catch (ParseException ex) {
-                Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            Tanggal.setDate(dateFormat);
-
-            if ("Laki-laki".equals(tabel.getValueAt(baris, 4).toString())) {
-                laki.setSelected(true);
-            } else {
-                perem.setSelected(true);
-            }
-            jumlah.setText(tabel.getValueAt(baris, 5).toString());
-            email.setText(tabel.getValueAt(baris, 6).toString());
-            alamat.setText(tabel.getValueAt(baris, 7).toString());
+            jumlah.setText(tabel.getValueAt(baris, 3).toString());
+            kasir.setText(tabel.getValueAt(baris, 6).toString());
         }
     }//GEN-LAST:event_tabelMouseClicked
 
     private void hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_hargaActionPerformed
+
+    private void jumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jumlahActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        // TODO add your handling code here:
+        selectData();
+    }//GEN-LAST:event_refreshActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateFormat = null;
+
+        nama.setText("");
+        id.setText("");
+        jumlah.setText("");
+        harga.setText("");
+        kasir.setText("");
+    }//GEN-LAST:event_clearActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        int baris = tabel.getSelectedRow();
+
+        if( baris >= 0 ){
+            String ID = tabel.getValueAt(baris,0).toString();
+            String SQL = "DELETE FROM tb_transaksi WHERE id_barang='"+ID+"'";
+            int Status = KoneksiDB.execute(SQL);
+            if (Status==1) {
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Data gagal dihapus","Gagal",JOptionPane.WARNING_MESSAGE);
+            }
+
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dulu","Error",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+        if("".equals(id.getText()) || "".equals(nama.getText())  || "".equals(harga.getText())  || "".equals(jumlah.getText())
+            || "".equals(kasir.getText()) ){
+            JOptionPane.showMessageDialog(this,"Harap Lengkapi Data","Error",JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+
+            int jumlahnya = Integer.parseInt(String.valueOf(jumlah.getText()));
+            int hrg = Integer.parseInt(String.valueOf(harga.getText()));
+
+            int diskon = 10;
+
+            int sub_total = hrg * jumlahnya;
+
+            int total_harga;
+
+            if (sub_total > 100000){
+                total_harga = (sub_total)-(sub_total)*diskon/100;
+            }
+            else
+            {
+                total_harga= sub_total;
+                diskon = 0;
+            }
+
+            java.util.Date skrg = new java.util.Date();
+            java.text.SimpleDateFormat kal = new
+            java.text.SimpleDateFormat("dd/MM/yyyy");
+            String date = kal.format(skrg);
+
+            String SQL = "INSERT INTO tb_transaksi(id_barang,nama_barang,harga_barang,qty,diskon,total,kasir,tanggal) "+
+            "VALUES('"+id.getText()+"','"+nama.getText()+"','"+harga.getText()+"','"+jumlahnya+"','"+diskon+"','"+total_harga+"','"+kasir.getText()+"','"+date+"')";
+            int Status = KoneksiDB.execute(SQL);
+            if (Status==1) {
+                JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Data gagal ditambahkan","Sukses",JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_saveActionPerformed
 
     private void printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printActionPerformed
         // TODO add your handling code here:
@@ -446,10 +416,6 @@ ActionListener taskPerformer = new ActionListener(){
             System.err.format("Cannot print %s%n", e.getMessage());
         }
     }//GEN-LAST:event_printActionPerformed
-
-    private void jumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumlahActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jumlahActionPerformed
 
     /**
      * @param args the command line arguments
@@ -511,35 +477,29 @@ ActionListener taskPerformer = new ActionListener(){
     private javax.swing.JTextField kasir;
     private javax.swing.JTextField nama;
     private javax.swing.JButton print;
-    private javax.swing.JLabel qty;
     private javax.swing.JButton refresh;
     private javax.swing.JButton save;
     private javax.swing.JTable tabel;
     private javax.swing.JLabel tgl;
+    private javax.swing.JLabel ya;
     // End of variables declaration//GEN-END:variables
 
     private void selectData() {
-       String kolom[] = {"NIS","NamaSiswa","TempatLahir","TanggalLahir","JenisKelamin","Kelas","Email","Alamat"};
+       String kolom[] = {"id_barang","nama_barang","harga_barang","qty","diskon","total","kasir","tanggal"};
        DefaultTableModel dtm = new DefaultTableModel(null,kolom);
-       String SQL = "SELECT * FROM `t_siswa`";
+       String SQL = "SELECT * FROM `tb_transaksi`";
        ResultSet rs = KoneksiDB.executeQuery(SQL);
        try {
            while(rs.next()){
-               String NIS = rs.getString(1);
-               String NamaSiswa = rs.getString(2);
-               String TempatLahir = rs.getString(3);
-               String TanggalLahir = rs.getString(4);
-               String JenisKelamin = "";
-               if ("L".equals(rs.getString(5))){
-                   JenisKelamin = "Laki-Laki";
-               }
-               else{
-                   JenisKelamin = "Perempuan";
-               }
-               String Kelas = rs.getString(6);
-               String Email = rs.getString(7);
-               String Alamat = rs.getString(8);
-               String data[] = {NIS,NamaSiswa,TempatLahir,TanggalLahir,JenisKelamin,Kelas,Email,Alamat};
+               String id_barang = rs.getString(2);
+               String nama_barang = rs.getString(3);
+               String harga_barang = rs.getString(4);
+               String qty = rs.getString(5);
+               String diskon = rs.getString(6);
+               String total = rs.getString(7);
+               String kasir = rs.getString(8);
+               String tanggal = rs.getString(9);
+               String data[] = {id_barang,nama_barang,harga_barang,qty,diskon,total,kasir,tanggal};
                dtm.addRow(data);
                
            }
